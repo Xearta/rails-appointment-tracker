@@ -5,6 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :omniauthable
   has_many :appointments
   has_many :patients, :through => :appointments
+  validates :username, :presence => true,
+                       :uniqueness => true
+
 
 def self.from_omniauth(auth)
 where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

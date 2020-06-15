@@ -1,15 +1,14 @@
 ### TODOS:
+- TODO: Welcome Page
+- TODO: Fix the ability to 'break' url (/patients/3/appointments/11 != /patients/1/appointments/11)
 - Check requirements
-- TODO: Error messages
+
 - TODO: Strike-through on expired
-- TODO: Deletion
-- TODO: Editing
-- TODO: Validations
 - TODO: Styling
-- TODO: Fix accounts not having a username
-- TODO: README
-
-
+- TODO: Update the partial with local variables
+- TODO: Allow ability to change the patient?
+- TODO: Comments and Refactoring
+- TODO: Fix patient deletion
 
 
 # APPOINTMENT TRACKER APP:

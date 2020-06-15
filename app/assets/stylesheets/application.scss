@@ -1,0 +1,82 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+
+.passed {
+    color: #e8e8e8;
+    opacity: 60%;
+    text-decoration: line-through;
+}
+
+body {
+    background-color: #777;
+    color: #f0f0f0;
+}
+
+h3 {
+    text-align: center;
+    color: #f2bb5c;
+}
+
+nav a {
+    color: #f0f0f0;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+    background-color: #6e6d6d
+}
+
+a {
+    color: #f0f0f0;
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+    color: white;
+    background-color: black;
+}
+
+input {
+    margin: auto;
+    box-sizing: border-box;
+}
+
+table {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+p.alert{
+    text-align: center;
+    color: #850f0f;
+    font-weight: bold;
+}
+
+div {
+    text-align: center;
+margin: 25px;
+}
+
+/* Gradient transparent - color - transparent */
+
+hr.style-two {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}

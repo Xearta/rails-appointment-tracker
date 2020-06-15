@@ -1,0 +1,12 @@
+<%= form_for([@patient, @appointment]) do |f| %>
+    <% if @appointment.errors.any? %>
+        <% @appointment.errors.full_messages.each do |msg| %>
+            <div class="alert alert-danger"><%= msg %></div>
+        <% end %>
+    <% end %>
+
+<p><%= f.label :appointment_date, "Appointment Date/Time:"%>
+<%= datetime_field("appointment", "appointment_date", min: Date.today) %></p>
+
+<%= f.submit %>
+<% end %>

@@ -1,1 +1,47 @@
-<h1>New Patient</h1>
+<% @appointments = @appointments.sort_by { |appt| appt.appointment_date } %>
+
+<h3>New Patient & New Appointment</h3>
+<hr class="style-two">
+<%= form_for(@patient) do |f| %>
+    <% if @patient.errors.any? %>
+        <% @patient.errors.full_messages.each do |msg| %>
+            <div class="alert alert-danger"><%= msg %></div>
+        <% end %>
+    <% end %>
+
+    <div>
+    <%= f.label :name, "Patient Name:" %>
+    <%= f.text_field :name %>
+
+    <%= f.label :age, "Patient Age:" %>
+    <%= f.number_field :age %>
+    </div>
+
+    <%= f.fields_for :appointments do |af| %>
+        <p><%= af.label :appointment_date, "Appointment Date/Time:"%>
+        <%= af.datetime_field :appointment_date, min: Date.today %></p>
+    <% end %>
+    <div>
+    <%= f.submit %>
+    </div>
+<% end %>
+
+
+<h3>Your Upcoming Appointments</h3>
+<hr class="style-two">
+<table style="width:100%">
+    <tr>
+        <th>Patient Name</th>
+        <th>Appointment Date/Time</th>
+    </tr>
+
+    <% @appointments.each do |appointment| %>
+        <% if current_user.id == appointment.user_id %>       
+            <% if appointment.appointment_date > DateTime.now %>
+                <td><p>Patient: <%= link_to "#{appointment.patient.name} (Age:  #{appointment.patient.age.to_s})", appointment.patient %></p></td>
+                <td><p>Date/Time: <%= appointment.appointment_date.strftime("%m/%d/%Y %I:%M %p") %> </p></td>
+                </tr>
+            <% end %>
+        <% end %>
+    <% end %>
+</table>

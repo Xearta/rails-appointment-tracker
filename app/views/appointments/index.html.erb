@@ -1,8 +1,7 @@
-<h1>Appointments#index</h1>
-
 <% @appointments = @appointments.sort_by { |appt| appt.appointment_date } %>
 
 <h3>Your Appointments (<%= current_user.appointments.count %>)</h3>
+<hr class="style-two">
 <table style="width:100%">
     <tr>
         <th>Patient Name</th>
@@ -12,23 +11,27 @@
 
     <% @appointments.each do |appointment| %>
         <% if current_user.id == appointment.user_id %>
-            <tr>
-            <% if appointment.appointment_date < Time.zone.now %>
-                <%# Add some sort of strikethrough effect or something %>
+            
+            <% if appointment.appointment_date < DateTime.now %>
+            <% else %>
             <% end %>
             <td><p>Patient: <%= link_to "#{appointment.patient.name} (Age:  #{appointment.patient.age.to_s})", appointment.patient %></p></td>
             <td><p>Date/Time: <%= appointment.appointment_date.strftime("%m/%d/%Y %I:%M %p") %> </p></td>
             <td>
                 <%= link_to 'View', patient_appointment_path(appointment.patient, appointment), class: "btn btn-info"%>
                 <%= link_to 'Edit', edit_patient_appointment_path(appointment.patient, appointment), class: "btn btn-warning"%>
+                <%= link_to 'Delete', patient_appointment_path(appointment.patient, appointment), 
+                method: :delete,
+                class: "btn btn-danger",
+                data: {confirm: 'Are you sure?'}%>
             </td>
             </tr>
         <% end %>
     <% end %>
 </table>
-<hr>
 
 <h3>All Appointments (<%= Appointment.all.count %>)</h3>
+<hr class="style-two">
 <table style="width:100%">
     <tr>
         <th>Physician</th>

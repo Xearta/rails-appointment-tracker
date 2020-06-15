@@ -1,4 +1,23 @@
-<h1>Appointments#show</h1>
-<li><%= @appointment.user.username %></li>
-<li><%= @appointment.patient.name %></li>
-<li><%= @appointment.appointment_date %></li>
+<h3>Appointment Information</h3>
+<hr class="style-two">
+<table style="width:100%">
+    <tr>
+        <th>Patient Name</th>
+        <th>Age</th>
+        <th>Appointment Date/Time</th>
+        <th>Appointment Options</th>
+    </tr>
+    <tr>
+        <td><%= link_to  @patient.name, patient_path(@patient) %></td>
+        <td><%= @patient.age %></td>
+        <td><%= @appointment.appointment_date.strftime("%m/%d/%Y %I:%M %p") %></td>
+        <td>
+            <%= link_to 'Edit', edit_patient_appointment_path(@patient, @appointment), class: "btn btn-warning"%>
+            <%= link_to 'Delete', patient_appointment_path(@patient, @appointment), 
+            method: :delete,
+            class: "btn btn-danger",
+            data: {confirm: 'Are you sure?'}%>
+        </td>
+    </tr>
+
+</table>

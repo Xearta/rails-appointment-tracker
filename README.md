@@ -1,24 +1,22 @@
-# README
+# Rails Appointment Tracker App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a small Sinatra application that allows a user (Physician) to create and maintain appointments with their 'Patients'. You can create as many users, patients, or appointments are you would like. 
 
-Things you may want to cover:
+This application allows you to create users through `Devise` or by 3rd party through **GitHub**.
 
-* Ruby version
+** This project is not intended for professional usage. **
 
-* System dependencies
 
-* Configuration
+## Usage
+To use this app, just clone, run rails `db:migrate` and then run `rails s` for the server. It will be hosted on `http://localhost:3000` by default.
 
-* Database creation
+*If you want pre-made data, you can run `rails db:seed` before starting the server.*
 
-* Database initialization
 
-* How to run the test suite
+## Contributing
 
-* Services (job queues, cache servers, search engines, etc.)
+Bug reports and pull requests are welcome on GitHub at https://github.com/Xearta/rails-appointment-tracker. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
-* Deployment instructions
+## License
 
-* ...
+The app is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

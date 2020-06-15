@@ -1,1 +1,21 @@
-<h1>Edit Patient</h1>
+<h3>Edit Patient</h3>
+<hr class="style-two">
+<%= form_for(@patient) do |f| %>
+    <% if @patient.errors.any? %>
+        <% @patient.errors.full_messages.each do |msg| %>
+            <div class="alert alert-danger"><%= msg %></div>
+        <% end %>
+    <% end %>
+
+    <div>
+    <%= f.label :name, "Patient Name:" %>
+    <%= f.text_field :name %>
+
+    <%= f.label :age, "Patient Age:" %>
+    <%= f.number_field :age %>
+    </div>
+    
+    <div>
+    <%= f.submit %>
+    </div>
+<% end %>

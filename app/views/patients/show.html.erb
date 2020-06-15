@@ -1,10 +1,25 @@
-<h1>Patient Show</h1>
+<% @appointments = @appointments.sort_by { |appt| appt.appointment_date } %>
 
-<h1><%= @patient.name %></h1>
-
-<% @appointments.each do |appt| %>
-    <li><%= appt.user.username %> - <%= appt.appointment_date %></li>
-    <li><%= link_to "Show", patient_appointment_path(@patient, appt) %></li>
-<% end %>
-
-<%= link_to "Create Appointment", new_patient_appointment_path(@patient)%>
+<h3><%= @patient.name %>'s Appointments (<%= @patient.age %> years old) | <%= link_to "Create Appointment", new_patient_appointment_path(@patient), class: "btn btn-success"%></h3>
+<hr class="style-two">
+<table width="100%">
+    <tr>
+        <th>Physician</th>
+        <th>Appointment Date/Time</th>
+        <th>Appointment Options</th>    
+    </tr>
+    <% @appointments.each do |appointment| %>
+    <tr>
+        <td><%= appointment.user.username %></td>
+        <td><%= appointment.appointment_date.strftime("%m/%d/%Y %I:%M %p") %></td>
+        <td>
+            <%= link_to 'View', patient_appointment_path(appointment.patient, appointment), class: "btn btn-info"%>
+            <%= link_to 'Edit', edit_patient_appointment_path(appointment.patient, appointment), class: "btn btn-warning"%>
+            <%= link_to 'Delete', patient_appointment_path(appointment.patient, appointment), 
+            method: :delete,
+            class: "btn btn-danger",
+            data: {confirm: 'Are you sure?'}%>
+        </td>
+    </tr>
+    <% end %>
+</table>

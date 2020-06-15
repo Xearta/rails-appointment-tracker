@@ -1,10 +1,33 @@
-<h1>Create A New Appointment For: <%= @patient.name %></h1>
-<p>Physician: <%= current_user.username %>  
+<% @appointments = @appointments.sort_by { |appt| appt.appointment_date } %>
+
+<h3>Create A New Appointment For: <%= @appointment.patient.name %></h3>
+<hr class="style-two">
 
 <%= form_for([@patient, @appointment]) do |f| %>
+    <% if @appointment.errors.any? %>
+        <% @appointment.errors.full_messages.each do |msg| %>
+            <div class="alert alert-danger"><%= msg %></div>
+        <% end %>
+    <% end %>
 
 <p><%= f.label :appointment_date, "Appointment Date/Time:"%>
 <%= datetime_field("appointment", "appointment_date", min: Date.today) %></p>
 
 <%= f.submit %>
 <% end %>
+
+<hr class="style-two">
+<h3><%= @appointment.patient.name %>'s Current Appointments</h3>
+
+<table width="100%">
+    <tr>
+        <th>Physician</th>
+        <th>Appointment Date/Time</th>
+    </tr>
+    <% @appointments.each do |appointment| %>
+    <tr>
+        <td><%= appointment.user.username %></td>
+        <td><%= appointment.appointment_date.strftime("%m/%d/%Y %I:%M %p") %></td>
+    </tr>
+    <% end %>
+</table>
