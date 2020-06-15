@@ -1,3 +1,17 @@
+### TODOS:
+- Check requirements
+- TODO: Error messages
+- TODO: Strike-through on expired
+- TODO: Deletion
+- TODO: Editing
+- TODO: Validations
+- TODO: Styling
+- TODO: Fix accounts not having a username
+- TODO: README
+
+
+
+
 # APPOINTMENT TRACKER APP:
 # Doctor (User)
 has_many :appointments
@@ -34,13 +48,3 @@ belongs_to :patient
 [ ] - Nested Routes -> Nested `new` directly related to parent AND nested `index` or `show`
 [ ] - Correctly display validation errors in forms
 [ ] - Application should be DRY
-
-
-### TODOS:
-- Check requirements
-- TODO: Error messages
-- TODO: Strike-through on expired
-- TODO: Deletion
-- TODO: Validations
-- TODO: Styling
-- TODO: Fix accounts not having a username
