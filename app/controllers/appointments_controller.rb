@@ -2,7 +2,8 @@ class AppointmentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @appointments = Appointment.all
+    @appointments = Appointment.all.order(:appointment_date
+    )
   end
 
   def show
@@ -13,12 +14,15 @@ class AppointmentsController < ApplicationController
     else
       @appointment = Appointment.find(params[:id])
       @patient = Patient.find_by(id: params[:patient_id])
+      if @appointment.patient_id != @patient.id
+        redirect_to patient_path(@patient), alert: "The selected appointment doesn't match with the selected patient."
+      end
     end
   end
 
   def new
     @patient = Patient.find_by(id: params[:patient_id])
-    @appointments = @patient.appointments
+    @appointments = @patient.appointments.order(:appointment_date)
     if params[:patient_id] && !Patient.exists?(params[:patient_id])
       redirect_to patients_path, alert: "Patient not found."
     elsif params[:patient_id]
@@ -39,6 +43,7 @@ class AppointmentsController < ApplicationController
       redirect_to patient_path(@appointment.patient_id)
     else
       @patient = Patient.find(params[:patient_id])
+      @appointments = Appointment.all
       render 'new'
     end
   end
@@ -53,9 +58,13 @@ class AppointmentsController < ApplicationController
     else    
       if @appointment.user_id != current_user.id
         redirect_to patient_path(@patient), alert: "You cannot edit another physician's appointments."
+      elsif @appointment.patient_id != @patient.id
+        redirect_to patient_path(@patient), alert: "The selected appointment doesn't match with the selected patient."
       end
     end
   end
+
+
 
   def update
     @appointment = Appointment.find(params[:id])

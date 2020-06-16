@@ -1,5 +1,3 @@
-<% @appointments = @appointments.sort_by { |appt| appt.appointment_date } %>
-
 <h3>New Patient & New Appointment</h3>
 <hr class="style-two">
 <%= form_for(@patient) do |f| %>
@@ -26,7 +24,7 @@
     </div>
 <% end %>
 
-
+<% @appointments = @appointments.sort_by { |appt| appt.appointment_date } %>
 <h3>Your Upcoming Appointments</h3>
 <hr class="style-two">
 <table style="width:100%">

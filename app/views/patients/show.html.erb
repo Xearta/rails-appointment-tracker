@@ -1,5 +1,3 @@
-<% @appointments = @appointments.sort_by { |appt| appt.appointment_date } %>
-
 <h3><%= @patient.name %>'s Appointments (<%= @patient.age %> years old) | <%= link_to "Create Appointment", new_patient_appointment_path(@patient), class: "btn btn-success"%></h3>
 <hr class="style-two">
 <table width="100%">
@@ -9,7 +7,9 @@
         <th>Appointment Options</th>    
     </tr>
     <% @appointments.each do |appointment| %>
-    <tr>
+    <% if appointment.appointment_date < DateTime.now %>
+        <tr class="passed">
+    <% end %>
         <td><%= appointment.user.username %></td>
         <td><%= appointment.appointment_date.strftime("%m/%d/%Y %I:%M %p") %></td>
         <td>

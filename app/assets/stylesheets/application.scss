@@ -15,7 +15,12 @@
  */
 
 
-.passed {
+ input {
+    margin: auto;
+    box-sizing: border-box;
+}
+
+ .passed {
     color: #e8e8e8;
     opacity: 60%;
     text-decoration: line-through;
@@ -50,11 +55,6 @@ a:hover {
     text-decoration: none;
     color: white;
     background-color: black;
-}
-
-input {
-    margin: auto;
-    box-sizing: border-box;
 }
 
 table {

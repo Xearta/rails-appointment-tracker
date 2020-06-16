@@ -4,7 +4,7 @@ This is a small Sinatra application that allows a user (Physician) to create and
 
 This application allows you to create users through `Devise` or by 3rd party through **GitHub**.
 
-** This project is not intended for professional usage. **
+**This project is not intended for professional usage.**
 
 
 ## Usage

@@ -1,5 +1,3 @@
-<% @appointments = @appointments.sort_by { |appt| appt.appointment_date } %>
-
 <h3>Your Appointments (<%= current_user.appointments.count %>)</h3>
 <hr class="style-two">
 <table style="width:100%">
@@ -11,9 +9,8 @@
 
     <% @appointments.each do |appointment| %>
         <% if current_user.id == appointment.user_id %>
-            
             <% if appointment.appointment_date < DateTime.now %>
-            <% else %>
+                <tr class="passed">
             <% end %>
             <td><p>Patient: <%= link_to "#{appointment.patient.name} (Age:  #{appointment.patient.age.to_s})", appointment.patient %></p></td>
             <td><p>Date/Time: <%= appointment.appointment_date.strftime("%m/%d/%Y %I:%M %p") %> </p></td>
@@ -41,10 +38,8 @@
     </tr>
   <% @appointments.each do |appointment| %>
    <% if appointment.appointment_date < DateTime.now %>
-      <%# Do some fancy strikethrough %>
-   <% else %>
+      <tr class="passed">
    <% end %>
-   <tr>
         <td><p>Physician: <%= appointment.user.username %></p></td>
         <td><p>Patient: <%= link_to "#{appointment.patient.name} (Age:  #{appointment.patient.age.to_s})", appointment.patient %></p></td>
         <td><p>Date/Time: <%= appointment.appointment_date.strftime("%m/%d/%Y %I:%M %p") %> </p></td>

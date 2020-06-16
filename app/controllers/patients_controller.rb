@@ -2,12 +2,17 @@ class PatientsController < ApplicationController
     before_action :authenticate_user!
 
     def index
-        @patients = Patient.all
+        #@patients = Patient.all
+        @patients = Patient.search(params[:search])
     end
 
     def show
-        @patient = Patient.find(params[:id])
-        @appointments = @patient.appointments
+        if !Patient.exists?(params[:id])
+            redirect_to patients_path, alert: "Patient not found."
+        else
+            @patient = Patient.find(params[:id])
+            @appointments = @patient.appointments.order(:appointment_date)
+        end
     end
 
     def new
@@ -23,6 +28,7 @@ class PatientsController < ApplicationController
         if @patient.save
             redirect_to patient_path(@patient)
         else
+            @appointments = Appointment.all
             render 'new'
         end
     end
@@ -66,7 +72,7 @@ class PatientsController < ApplicationController
 
     private
     def patient_params
-        params.require(:patient).permit(:name, :age,
+        params.require(:patient).permit(:name, :age, :search,
                                         appointments_attributes:
                                         [:appointment_date])
     end
