@@ -1,4 +1,10 @@
-<h3><%= @patient.name %>'s Appointments (<%= @patient.age %> years old) | <%= link_to "Create Appointment", new_patient_appointment_path(@patient), class: "btn btn-success"%></h3>
+<h3><%= @patient.name %>'s Appointments (<%= @patient.age %> years old) | 
+<%= link_to "Create Appointment", new_patient_appointment_path(@patient), class: "btn btn-success"%> |
+<%= link_to "Edit Patient File", edit_patient_path(@patient), class: "btn btn-warning" %> |
+<%= link_to 'Delete Patient', patient_path(@patient),
+                        method: :delete,
+                        class: "btn btn-danger",
+                        data: {confirm: 'Are you sure?'}%></h3>
 <hr class="style-two">
 <table width="100%">
     <tr>

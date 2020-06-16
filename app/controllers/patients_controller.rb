@@ -59,14 +59,13 @@ class PatientsController < ApplicationController
                 appointment.destroy
             end
         end
-
-        if !@patient.appointments.empty?
-            redirect_to patients_path, alert: "You cannot delete this patient. It has appointments by other physicians."
+        
+        if @patient.appointments.count > 0
+            redirect_to patient_path(@patient), alert: "You cannot delete this patient. It has appointments by other physicians. However, your appointments with this patient have been removed."
         else
             @patient.destroy
-            redirect_to patients_path    
-        end
-        
+            redirect_to patients_path
+        end        
     end
 
 

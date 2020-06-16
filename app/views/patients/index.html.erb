@@ -24,7 +24,15 @@
     <tr>
         <td><%= link_to patient.name, patient_path(patient) %></td>
         <td><%= patient.age %> years old</td>
-        <td><%= appointments.first.appointment_date.strftime("%m/%d/%Y %I:%M %p")%></td>
+
+        <td>
+        <% if patient.appointments.count > 0 %>
+            <%= appointments.first.appointment_date.strftime("%m/%d/%Y %I:%M %p")%>
+        <% else %>
+            No Future Appointments
+        <% end %>
+        </td>
+
         <td><%= appointments.count %> Appointment(s)</td>
         <td>
             <%= link_to 'Create Appointment', new_patient_appointment_path(patient), class: "btn btn-success"%>

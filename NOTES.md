@@ -1,16 +1,13 @@
 ### TODOS:
-- TODO: Welcome Page
 - Check requirements
-- TODO: Search bar with ActiveRecord Scope method? | Patient Page?
 
 
+- TODO: ActiveRecord Scope Method
 - TODO: Fix DateTime functionality
-- TODO: Strike-through OR Delete on expired
 - TODO: Styling
 - TODO: Update the partial with local variables
-- TODO: Allow ability to change the patient?
 - TODO: Comments and Refactoring
-- TODO: Fix patient deletion
+- TODO: Welcome Page
 
 
 
