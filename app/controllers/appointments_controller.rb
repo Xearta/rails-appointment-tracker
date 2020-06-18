@@ -1,34 +1,33 @@
 class AppointmentsController < ApplicationController
   before_action :authenticate_user!
-
+  before_action :find_appointment, only: [:show, :edit, :update, :destroy]
+  before_action :find_patient, only: [:show, :edit, :new, :create]
+  
   def index
     @appointments = Appointment.all.order(:appointment_date
     )
+    @expired_appointments = Appointment.expired
   end
 
+  #appointment_valid? is in the application controller
   def show
-    if !Appointment.exists?(params[:id])
-      redirect_to patients_path, alert: "Appointment not found."
-    elsif !Patient.exists?(params[:patient_id])
-      redirect_to patients_path, alert: "Patient not found."
-    else
-      @appointment = Appointment.find(params[:id])
-      @patient = Patient.find_by(id: params[:patient_id])
-      if @appointment.patient_id != @patient.id
-        redirect_to patient_path(@patient), alert: "The selected appointment doesn't match with the selected patient."
-      end
+    appointment_valid?
+  end
+
+  #appointment_valid? is in the application controller
+  def edit
+    appointment_valid?
+    if @appointment.user_id != current_user.id
+      redirect_to patient_path(@patient), alert: "You cannot edit another physician's appointments."
     end
   end
 
   def new
-    @patient = Patient.find_by(id: params[:patient_id])
-    @appointments = @patient.appointments.order(:appointment_date)
-    if params[:patient_id] && !Patient.exists?(params[:patient_id])
-      redirect_to patients_path, alert: "Patient not found."
-    elsif params[:patient_id]
-      @appointment = Appointment.new(patient_id: params[:patient_id])
+    if !Patient.exists?(params[:patient_id])
+      redirect_to patients_path, alert: "You cannot make an appointment for a non-existent patient."
     else
-      @appointment = Appointment.new
+      @appointments = @patient.appointments.order(:appointment_date)
+      @appointment = Appointment.new(patient_id: params[:patient_id])
     end
   end
 
@@ -37,38 +36,16 @@ class AppointmentsController < ApplicationController
     @appointment.user_id = current_user.id
     @appointment.patient_id = params[:patient_id]
 
-
-
     if @appointment.save
-      redirect_to patient_path(@appointment.patient_id)
+      redirect_to patient_path(@appointment.patient_id), notice: "Appointment for #{@patient.name} created sucessfully."
     else
-      @patient = Patient.find(params[:patient_id])
       @appointments = Appointment.all
       render 'new'
     end
   end
 
-  def edit
-    @patient = Patient.find_by(id: params[:patient_id])
-    @appointment = Appointment.find_by(id: params[:id])
-    if !Patient.exists?(params[:patient_id]) && !Appointment.exists?(params[:id])
-      redirect_to patients_path, alert: "Appointment not found."
-    elsif !Patient.exists?(params[:patient_id])
-      redirect_to patients_path, alert: "Patient not found."
-    else    
-      if @appointment.user_id != current_user.id
-        redirect_to patient_path(@patient), alert: "You cannot edit another physician's appointments."
-      elsif @appointment.patient_id != @patient.id
-        redirect_to patient_path(@patient), alert: "The selected appointment doesn't match with the selected patient."
-      end
-    end
-  end
-
-
-
+  
   def update
-    @appointment = Appointment.find(params[:id])
-
     if @appointment.update(appointment_params)
       redirect_to patient_appointment_path(@appointment.patient_id, @appointment)
     else
@@ -76,12 +53,18 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  # Custom Route that will delete all 'expired' appointments
+  # Usage of a scope method chained with .delete_all
+  def destroy_all_expired
+    Appointment.expired.delete_all
+    redirect_to root_path, notice: "Expired appointments deleted successfully."
+  end
 
+  # This will only destroy 1 appt at a time - Only if you are the owner
   def destroy
-    @appointment = Appointment.find(params[:id])
     if current_user.id == @appointment.user_id
       @appointment.destroy
-      redirect_to patient_path(@appointment.patient)
+      redirect_to patient_path(@appointment.patient), notice: "Appointment deleted sucessfully."
     else
       redirect_to patient_path(@appointment.patient), alert: "You cannot delete another physician's appointments."
     end
@@ -91,5 +74,13 @@ class AppointmentsController < ApplicationController
   private
   def appointment_params
     params.require(:appointment).permit(:appointment_date)
+  end
+
+  def find_appointment
+    @appointment = Appointment.find_by(id: params[:id])
+  end
+
+  def find_patient
+    @patient = Patient.find_by(id: params[:patient_id])
   end
 end

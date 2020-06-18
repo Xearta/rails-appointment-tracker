@@ -1,3 +1,6 @@
+<%# ================= %>
+<%# YOUR APPOINTMENTS %>
+<%# ================= %>
 <h3>Your Appointments (<%= current_user.appointments.count %>)</h3>
 <hr class="style-two">
 <table style="width:100%">
@@ -9,7 +12,8 @@
 
     <% @appointments.each do |appointment| %>
         <% if current_user.id == appointment.user_id %>
-            <% if appointment.appointment_date < DateTime.now %>
+            <%# Must convert the time to 'local' manually | DateTime is weird%>
+            <% if appointment.appointment_date < (Time.now - 14400) %>
                 <tr class="passed">
             <% end %>
             <td><p>Patient: <%= link_to "#{appointment.patient.name} (Age:  #{appointment.patient.age.to_s})", appointment.patient %></p></td>
@@ -27,6 +31,10 @@
     <% end %>
 </table>
 
+
+<%# ================ %>
+<%# ALL APPOINTMENTS %>
+<%# ================ %>
 <h3>All Appointments (<%= Appointment.all.count %>)</h3>
 <hr class="style-two">
 <table style="width:100%">
@@ -37,7 +45,8 @@
         <th>Appointment Options</th>
     </tr>
   <% @appointments.each do |appointment| %>
-   <% if appointment.appointment_date < DateTime.now %>
+  <%# Must convert the time to 'local' manually | DateTime is weird%>
+   <% if appointment.appointment_date < (Time.now - 14400) %>
       <tr class="passed">
    <% end %>
         <td><p>Physician: <%= appointment.user.username %></p></td>
@@ -50,3 +59,9 @@
    </tr>
 <% end %>
 </table>
+
+
+<%= link_to "DELETE ALL EXPIRED APPOINTMENTS", appointments_delete_all_path, 
+                        method: :delete,
+                        class: "btn btn-danger",
+                        data: {confirm: 'Are you sure?'} %>

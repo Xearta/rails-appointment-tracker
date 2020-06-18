@@ -1,22 +1,11 @@
 <h3>Create A New Appointment For: <%= @appointment.patient.name %></h3>
 <hr class="style-two">
-
-<%= form_for([@patient, @appointment]) do |f| %>
-    <% if @appointment.errors.any? %>
-        <% @appointment.errors.full_messages.each do |msg| %>
-            <div class="alert alert-danger"><%= msg %></div>
-        <% end %>
-    <% end %>
-
-<p><%= f.label :appointment_date, "Appointment Date/Time:"%>
-<%= datetime_field("appointment", "appointment_date", min: Date.today) %></p>
-
-<%= f.submit %>
-<% end %>
+<%# New Patient Form %>
+<%= render partial: 'form', locals: {appointment: @appointment, patient: @patient}  %>
 
 <hr class="style-two">
+<%# Current Patients Upcoming Appoointments %>
 <h3><%= @appointment.patient.name %>'s Upcoming Appointments</h3>
-
 <table width="100%">
     <tr>
         <th>Physician</th>
@@ -31,3 +20,6 @@
         <% end %>
     <% end %>
 </table>
+
+<%# Form to show YOUR upcoming appointments %>
+<%= render partial: 'upcoming_appt', locals: {appointments: @appointments} %>

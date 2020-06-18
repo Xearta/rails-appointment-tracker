@@ -31,6 +31,11 @@ body {
     color: #f0f0f0;
 }
 
+h1 {
+    text-align: center;
+    color: burlywood;
+}
+
 h3 {
     text-align: center;
     color: #f2bb5c;
@@ -65,6 +70,12 @@ table {
 p.alert{
     text-align: center;
     color: #850f0f;
+    font-weight: bold;
+}
+
+p.notice {
+    text-align: center;
+    color: yellow;
     font-weight: bold;
 }
 

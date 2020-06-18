@@ -1,8 +1,8 @@
 class PatientsController < ApplicationController
     before_action :authenticate_user!
+    before_action :find_patient, only: [:show, :edit, :update, :destroy]
 
     def index
-        #@patients = Patient.all
         @patients = Patient.search(params[:search])
     end
 
@@ -10,7 +10,6 @@ class PatientsController < ApplicationController
         if !Patient.exists?(params[:id])
             redirect_to patients_path, alert: "Patient not found."
         else
-            @patient = Patient.find(params[:id])
             @appointments = @patient.appointments.order(:appointment_date)
         end
     end
@@ -18,7 +17,8 @@ class PatientsController < ApplicationController
     def new
         @patient = Patient.new
         @patient.appointments.build
-        @appointments = Appointment.all
+        @appointments = Appointment.all.order(:appointment_date
+    )
     end
 
     def create
@@ -26,7 +26,7 @@ class PatientsController < ApplicationController
         @patient.appointments.last.user_id = current_user.id
 
         if @patient.save
-            redirect_to patient_path(@patient)
+            redirect_to patient_path(@patient), notice: "Patient & Appointment created sucessfully."
         else
             @appointments = Appointment.all
             render 'new'
@@ -37,13 +37,12 @@ class PatientsController < ApplicationController
         if !Patient.exists?(params[:id])
             redirect_to patients_path, alert: "Patient not found."
         else
-            @patient = Patient.find(params[:id])
+            @appointments = @patient.appointments.last
         end
     end
 
 
     def update
-        @patient = Patient.find(params[:id])
         if @patient.update(patient_params)
             redirect_to patient_path(@patient)
         else
@@ -53,7 +52,6 @@ class PatientsController < ApplicationController
 
 
     def destroy
-        @patient = Patient.find(params[:id])
         @patient.appointments.each do |appointment|
             if current_user.id == appointment.user_id
                 appointment.destroy
@@ -64,7 +62,7 @@ class PatientsController < ApplicationController
             redirect_to patient_path(@patient), alert: "You cannot delete this patient. It has appointments by other physicians. However, your appointments with this patient have been removed."
         else
             @patient.destroy
-            redirect_to patients_path
+            redirect_to patients_path, notice: "Patient deleted sucessfully."
         end        
     end
 
@@ -74,5 +72,9 @@ class PatientsController < ApplicationController
         params.require(:patient).permit(:name, :age, :search,
                                         appointments_attributes:
                                         [:appointment_date])
+    end
+
+    def find_patient
+        @patient = Patient.find_by(id: params[:id])
     end
 end

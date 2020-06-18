@@ -1,25 +1,12 @@
-### TODOS:
-- Check requirements
-
-
-- TODO: ActiveRecord Scope Method
-- TODO: Fix DateTime functionality
-- TODO: Styling
-- TODO: Update the partial with local variables
-- TODO: Comments and Refactoring
-- TODO: Welcome Page
-
-
-
 ## REQUIREMENTS:
 [X] - Include 1 has_many, 1 belongs_to, 2 has_many :through AND the join table must include a user-submittable attribute
 [X] - Models must include reasonable validations (Support against invalid data)
-[ ] - One class level ActiveRecord Scope Method -> Must be chainable -> Must use an ActiveRecord Query Method within it
+[X] - One class level ActiveRecord Scope Method -> Must be chainable -> Must use an ActiveRecord Query Method within it
 [X] - Standard User Authentication
 [X] - Allow for 3rd party login (GitHub)
 [X] - Nested Routes -> Nested `new` directly related to parent AND nested `index` or `show`
 [X] - Correctly display validation errors in forms
-[ ] - Application should be DRY
+[X] - Application should be DRY
 
 
 #### APPOINTMENT TRACKER APP: ####

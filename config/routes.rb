@@ -7,7 +7,13 @@ Rails.application.routes.draw do
   end
 
   root to: 'appointments#index'
+
+  # Route will allow deletion of all expired appointments /w button click
+  delete 'appointments/delete_all', to: 'appointments#destroy_all_expired'
   
+  # Nested Routes for appointments inside of patients
+  # /patients/:id/appointments/new
+  # /patients/:id/appointments/:id/edit
   resources :patients do
     resources :appointments
   end

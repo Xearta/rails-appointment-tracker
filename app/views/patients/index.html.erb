@@ -2,15 +2,15 @@
 <h4>Create an appointment based on a patient</h4>
 <hr class="style-two">
 
-
+<%# Search Form to find patients by name %>
+<%# Will show any patient 'containing' the search result %>
 <%= form_tag(patients_path, method: "get") do %>
   <%= label_tag(:search, "Search by Patient Name:") %>
   <%= text_field_tag(:search, params[:search]) %>
   <%= submit_tag("Search") %>
 <% end %>
 
-
-
+<%# Table to show all patients %>
 <table style="width:100%">
     <tr>
         <th>Patient</th>
@@ -27,7 +27,8 @@
 
         <td>
         <% if patient.appointments.count > 0 %>
-            <%= appointments.first.appointment_date.strftime("%m/%d/%Y %I:%M %p")%>
+            <%# Chaining another scope method here %>
+            <%= appointments.current.first.appointment_date.strftime("%m/%d/%Y %I:%M %p")%>
         <% else %>
             No Future Appointments
         <% end %>

@@ -1,3 +1,4 @@
+<%# Patient Info and Options for patient %>
 <h3><%= @patient.name %>'s Appointments (<%= @patient.age %> years old) | 
 <%= link_to "Create Appointment", new_patient_appointment_path(@patient), class: "btn btn-success"%> |
 <%= link_to "Edit Patient File", edit_patient_path(@patient), class: "btn btn-warning" %> |
@@ -6,6 +7,8 @@
                         class: "btn btn-danger",
                         data: {confirm: 'Are you sure?'}%></h3>
 <hr class="style-two">
+
+<%# Table to show patients information %>
 <table width="100%">
     <tr>
         <th>Physician</th>
@@ -13,7 +16,8 @@
         <th>Appointment Options</th>    
     </tr>
     <% @appointments.each do |appointment| %>
-    <% if appointment.appointment_date < DateTime.now %>
+    <%# Must convert the time to 'local' manually | DateTime is weird%>
+    <% if appointment.appointment_date < (Time.now - 14400) %>
         <tr class="passed">
     <% end %>
         <td><%= appointment.user.username %></td>
