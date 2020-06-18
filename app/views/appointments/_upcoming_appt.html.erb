@@ -10,7 +10,7 @@
 
     <% appointments.each do |appointment| %>
         <% if current_user.id == appointment.user_id %>       
-            <% if appointment.appointment_date > DateTime.now %>
+            <% if appointment.appointment_date > (Time.now - 14400) %>
                 <td><p>Patient: <%= link_to "#{appointment.patient.name} (Age:  #{appointment.patient.age.to_s})", appointment.patient %></p></td>
                 <td><p>Date/Time: <%= appointment.appointment_date.strftime("%m/%d/%Y %I:%M %p") %> </p></td>
                 </tr>

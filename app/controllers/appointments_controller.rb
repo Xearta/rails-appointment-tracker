@@ -27,6 +27,7 @@ class AppointmentsController < ApplicationController
       redirect_to patients_path, alert: "You cannot make an appointment for a non-existent patient."
     else
       @appointments = @patient.appointments.order(:appointment_date)
+      @your_appts = Appointment.all.order(:appointment_date)
       @appointment = Appointment.new(patient_id: params[:patient_id])
     end
   end
@@ -40,6 +41,7 @@ class AppointmentsController < ApplicationController
       redirect_to patient_path(@appointment.patient_id), notice: "Appointment for #{@patient.name} created sucessfully."
     else
       @appointments = Appointment.all
+      @your_appts = Appointment.all.order(:appointment_date)
       render 'new'
     end
   end
