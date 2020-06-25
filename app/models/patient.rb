@@ -7,16 +7,7 @@ class Patient < ApplicationRecord
                      :format => { with: /\D/, message: "%{value} is not valid. Must only contain letters." }
     validates :age, :presence => true
 
-    # Method to search the DB for patients of 'similiar' names
-    def self.search(search)
-        if search
-            patients = []
-            Patient.where("name LIKE ?", "%#{search}%").find_each do |patient|
-                patients << patient
-            end
-            patients
-        else
-            Patient.all
-        end
-    end
+    scope :search, -> (search) { where("name LIKE ?", "%#{search}%") }
+
+    
 end

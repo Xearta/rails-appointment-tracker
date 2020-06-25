@@ -3,7 +3,11 @@ class PatientsController < ApplicationController
     before_action :find_patient, only: [:show, :edit, :update, :destroy]
 
     def index
-        @patients = Patient.search(params[:search])
+        if params[:search]
+            @patients = Patient.search(params[:search])
+        else
+            @patients = Patient.all
+        end
     end
 
     def show
