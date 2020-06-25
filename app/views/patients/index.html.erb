@@ -26,7 +26,7 @@
         <td><%= patient.age %> years old</td>
 
         <td>
-        <% if patient.appointments.count > 0 %>
+        <% if patient.appointments.current.count > 0 %>
             <%# Chaining another scope method here %>
             <%= appointments.current.first.appointment_date.strftime("%m/%d/%Y %I:%M %p")%>
         <% else %>

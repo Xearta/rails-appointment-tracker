@@ -4,8 +4,7 @@ class AppointmentsController < ApplicationController
   before_action :find_patient, only: [:show, :edit, :new, :create]
   
   def index
-    @appointments = Appointment.all.order(:appointment_date
-    )
+    @appointments = Appointment.order(:appointment_date)
     @expired_appointments = Appointment.expired
   end
 
@@ -17,7 +16,7 @@ class AppointmentsController < ApplicationController
   #appointment_valid? is in the application controller
   def edit
     appointment_valid?
-    if @appointment.user_id != current_user.id
+    if !current_user.appointments.include?(@appointment)
       redirect_to patient_path(@patient), alert: "You cannot edit another physician's appointments."
     end
   end
@@ -27,7 +26,7 @@ class AppointmentsController < ApplicationController
       redirect_to patients_path, alert: "You cannot make an appointment for a non-existent patient."
     else
       @appointments = @patient.appointments.order(:appointment_date)
-      @your_appts = Appointment.all.order(:appointment_date)
+      @your_appts = Appointment.order(:appointment_date)
       @appointment = Appointment.new(patient_id: params[:patient_id])
     end
   end
@@ -41,7 +40,7 @@ class AppointmentsController < ApplicationController
       redirect_to patient_path(@appointment.patient_id), notice: "Appointment for #{@patient.name} created sucessfully."
     else
       @appointments = Appointment.all
-      @your_appts = Appointment.all.order(:appointment_date)
+      @your_appts = Appointment.order(:appointment_date)
       render 'new'
     end
   end
@@ -64,7 +63,7 @@ class AppointmentsController < ApplicationController
 
   # This will only destroy 1 appt at a time - Only if you are the owner
   def destroy
-    if current_user.id == @appointment.user_id
+    if current_user.appointments.include?(@appointment)
       @appointment.destroy
       redirect_to patient_path(@appointment.patient), notice: "Appointment deleted sucessfully."
     else

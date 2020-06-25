@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
         elsif !Patient.exists?(params[:patient_id])
             redirect_to patients_path, alert: "Patient not found."
         else
-            if @appointment.patient_id != @patient.id
-            redirect_to patient_path(@patient), alert: "The selected appointment doesn't match with the selected patient."
+            if !@patient.appointments.include?(@appointment)
+                redirect_to patient_path(@patient), alert: "The selected appointment doesn't match with the selected patient."
             end
         end
     end

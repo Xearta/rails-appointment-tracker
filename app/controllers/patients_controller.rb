@@ -17,8 +17,7 @@ class PatientsController < ApplicationController
     def new
         @patient = Patient.new
         @patient.appointments.build
-        @appointments = Appointment.all.order(:appointment_date
-    )
+        @appointments = Appointment.order(:appointment_date)
     end
 
     def create
@@ -53,7 +52,8 @@ class PatientsController < ApplicationController
 
     def destroy
         @patient.appointments.each do |appointment|
-            if current_user.id == appointment.user_id
+            if current_user.appointments.include?(appointment)
+                
                 appointment.destroy
             end
         end
