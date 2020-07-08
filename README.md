@@ -1,8 +1,10 @@
 # Rails Appointment Tracker App
 
-This is a small Sinatra application that allows a user (Physician) to create and maintain appointments with their 'Patients'. You can create as many users, patients, or appointments are you would like. 
+This is a small Rails application that allows a user (Physician) to create and maintain appointments with their 'Patients'. You can create as many users, patients, or appointments are you would like. 
 
-This application allows you to create users through `Devise` or by 3rd party through **GitHub**.
+This application allows you to create users through `Devise` or by 3rd party through **GitHub**. 
+
+This application uses Rails as a back-end with ERB files for the views. 
 
 **This project is not intended for professional usage.**
 
