@@ -16,10 +16,11 @@ To use this app, just clone, run rails `db:migrate` and then run `rails s` for t
 
 
 ## Preview of Homepage When Logged In
-<img src="https://imgur.com/Wp7doTk" />
+<img src="https://i.imgur.com/Wp7doTk.png" />
+
 
 ## Preview Of 'Create Appointment' Page
-
+<img src="https://i.imgur.com/xr7hUTS.png" />
 
 ## Contributing
 
